@@ -51,8 +51,8 @@ class CameraManager {
 const cameraManager = new CameraManager();
 
 // 重力加速度センサー
-class GravitySensorManager{
-  constructor(){
+class GravitySensorManager {
+  constructor() {
     let gravitySensor = new GravitySensor({ frequency: 1 });
     gravitySensor.addEventListener("reading", (e) => {
       console.log(`X 軸方向の重力 ${gravitySensor.x}`);
@@ -65,7 +65,7 @@ class GravitySensorManager{
       this.y = gravitySensor.y;
       this.z = gravitySensor.z;
     });
-    
+
     gravitySensor.start();
   }
 
@@ -76,8 +76,8 @@ class GravitySensorManager{
 const gravitySensorManager = new GravitySensorManager();
 
 // 加速度センサー
-class AccelerometerManager{
-  constructor(){
+class AccelerometerManager {
+  constructor() {
     const acl = new Accelerometer({ frequency: 1 });
     acl.addEventListener("reading", () => {
       console.log(`X 軸方向の加速度 ${acl.x}`);
@@ -106,7 +106,7 @@ class DeviceOrientationManager {
 
   constructor() {
     window.addEventListener("deviceorientationabsolute", (event: DeviceOrientationEvent) => {
-      if(new Date().getTime() < this.lastEventDateTime + 1000){
+      if (new Date().getTime() < this.lastEventDateTime + 1000) {
         return;
       }
 
@@ -203,8 +203,8 @@ class DeviceOrientationManager {
 }
 const deviceOrientationManager = new DeviceOrientationManager();
 
-class JsonDataManager{
-  constructor(){
+class JsonDataManager {
+  constructor() {
     setInterval(() => {
       this.collectData();
       document.getElementById('jsonData')!.innerHTML = JSON.stringify(this.jsonData);
@@ -214,13 +214,38 @@ class JsonDataManager{
   jsonData = {};
   collectData(): void {
     this.jsonData = {
-      "GravitySensor" : {
-        "x" : gravitySensorManager.x,
-        "y" : gravitySensorManager.y,
-        "z" : gravitySensorManager.z,
+      "GravitySensor": {
+        "x": gravitySensorManager.x,
+        "y": gravitySensorManager.y,
+        "z": gravitySensorManager.z,
 
       }
     }
   }
 }
 const jsonDataManager = new JsonDataManager();
+
+class SendJSONDataManager {
+  send(): void {
+    const sendData = document.getElementById('jsonData')!.innerHTML;
+
+    fetch('/sensor-data', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: sendData
+    }).then((response) => {
+      console.log('response! ' + response);
+    }).catch((error) => {
+      console.error('error! ' + error);
+    });
+  }
+}
+const sendJSONDataManager = new SendJSONDataManager();
+setInterval(() => {
+  const checkBox = document.getElementById('sendFlag')! as HTMLInputElement;
+  if(checkBox.checked){
+    sendJSONDataManager.send();
+  }
+}, 3000);

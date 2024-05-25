@@ -2,7 +2,9 @@ import express from 'express'
 const app: express.Express = express();
 const port = 3000;
 
-//pubilcフォルダ内のファイルも読み込めるようにする。
+// can handle request body as json
+app.use(express.json())
+// make public folder public
 app.use(express.static('public'));
 
 import fs from 'fs'
@@ -14,6 +16,13 @@ const server = https.createServer({
 
 app.get('/', (_req, res) => {
   res.send('Hello World!');
+})
+
+app.post('/sensor-data', (req, res) => {
+  const jsonData = req.body;
+  console.log('jsonData!');
+  console.log(jsonData);
+  res.send('OK');
 })
 
 /*app*/server.listen(port, () => {
