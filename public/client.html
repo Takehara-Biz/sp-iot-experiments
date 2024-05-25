@@ -14,10 +14,11 @@
   <h2>センサー編</h2>
   <div>
     <h3>カメラ</h3>
+    <a href="https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia" target="_blank" rel="noopener">MediaDevices: getUserMedia()</a>
     <div>
-      <button onclick="videoStart();">開始</button>
-      <button onclick="videoStop();">停止</button>
-      <button onclick="videoChangeCamera();">切替</button>
+      <button onclick="cameraManager.videoStart();">開始</button>
+      <button onclick="cameraManager.videoStop();">停止</button>
+      <button onclick="cameraManager.videoChangeCamera();">切替</button>
     </div>
     <div>
       <p id="js-camera"></p>
@@ -28,6 +29,7 @@
   </div>
   <div>
     <h3>重力加速度センサー</h3>
+    <a href="https://developer.mozilla.org/en-US/docs/Web/API/GravitySensor" target="_blank" rel="noopener">GravitySensor</a>
     <p>0から変わらない場合は、お使いの端末またはブラウザが、重力加速度センサーの取得に対応しておりません。</p>
     <p>X（左右）<span id="gravityXSpan">0</span></p>
     <p>Y（上下）<span id="gravityYSpan">0</span></p>
@@ -35,13 +37,30 @@
   </div>
   <div>
     <h3>加速度センサー</h3>
+    <a href="https://developer.mozilla.org/en-US/docs/Web/API/Accelerometer" target="_blank" rel="noopener">Accelerometer</a>
     <p>0から変わらない場合は、お使いの端末またはブラウザが、加速度センサーの取得に対応しておりません。</p>
     <p>X（左右）<span id="accelerationXSpan">0</span></p>
     <p>Y（上下）<span id="accelerationYSpan">0</span></p>
     <p>Z（前後）<span id="accelerationZSpan">0</span></p>
   </div>
+  <div>
+    <h3>コンパス（方位）</h3>
+    <a href="https://developer.mozilla.org/en-US/docs/Web/API/DeviceOrientationEvent" target="_blank" rel="noopener">DeviceOrientationEvent</a>
+    <p>（どうも精度が低い気がする・・。）</p>
+    <p>0から変わらない場合は、お使いの端末またはブラウザが、コンパス（方位）の取得に対応しておりません。</p>
+    <p>Result&nbsp;<span id="deviceOrientResult"></span></p>
+    <p>AdjustedValue&nbsp;<span id="deviceOrientationAdjustedValue">0</span></p>
+    <p>Absolute&nbsp;<span id="deviceOrientationAbsolute">0</span></p>
+    <p>Alpha&nbsp;<span id="deviceOrientationAlpha">0</span></p>
+    <p>Beta&nbsp;&nbsp;<span id="deviceOrientationBeta">0</span></p>
+    <p>Gamma&nbsp;<span id="deviceOrientationGamma">0</span></p>
+  </div>
   <h2>アクチュエーター編</h2>
   <p>ネタ。ディスプレイ、スピーカー、バイブレーション</p>
+  <h2>JSONデータ</h2>
+  <div width="100%">
+  <textarea id="jsonData" style="box-sizing:border-box; width:100%;" rows="20"></textarea>
+  </div>
 </body>
 
 </html>
