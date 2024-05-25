@@ -4,121 +4,44 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>スマホIoT実験室</title>
+  <script src="./client.js"></script>
 </head>
 
 <body>
-  <h1>ブラウザの、「Sensor API」&「MediaDevices」実験室</h1>
+  <h1>スマホIoT実験室</h1>
+  <p>ブラウザの、「Sensor API」&「MediaDevices」実験室</p>
+  <h2>センサー編</h2>
   <div>
-    <h2>カメラ</h2>
+    <h3>カメラ</h3>
     <div>
-      <div><button onclick="videoStart();">開始</button></div>
-      <div><button onclick="videoStop();">停止</button></div>
-      <div><button onclick="videoChangeCamera();">切替</button></div>
+      <button onclick="videoStart();">開始</button>
+      <button onclick="videoStop();">停止</button>
+      <button onclick="videoChangeCamera();">切替</button>
     </div>
     <div>
       <p id="js-camera"></p>
-      <div>
-        <video width="600" height="300" id="video" autoplay="autoplay"></video>
+      <div style="border:1px solid black;">
+        <video width="100%" height="300px" id="video" autoplay="autoplay"></video>
       </div>
     </div>
   </div>
   <div>
-    <h2>重力加速度センサー</h2>
+    <h3>重力加速度センサー</h3>
     <p>0から変わらない場合は、お使いの端末またはブラウザが、重力加速度センサーの取得に対応しておりません。</p>
     <p>X（左右）<span id="gravityXSpan">0</span></p>
     <p>Y（上下）<span id="gravityYSpan">0</span></p>
     <p>Z（前後）<span id="gravityZSpan">0</span></p>
   </div>
   <div>
-    <h2>加速度センサー</h2>
+    <h3>加速度センサー</h3>
     <p>0から変わらない場合は、お使いの端末またはブラウザが、加速度センサーの取得に対応しておりません。</p>
     <p>X（左右）<span id="accelerationXSpan">0</span></p>
     <p>Y（上下）<span id="accelerationYSpan">0</span></p>
     <p>Z（前後）<span id="accelerationZSpan">0</span></p>
   </div>
-    <script>
-
-      // カメラ
-
-      let cur = null;
-
-      let setting = {
-        audio: false,
-        video: {
-          width: 600,
-          height: 300,
-          facingMode: { exact: 'environment' },
-          // facingMode: 'user',
-        },
-      };
-
-      function videoStart() {
-        videoStop();
-        if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-          navigator.mediaDevices.getUserMedia(setting).then((stream) => {
-            document.getElementById('js-camera').innerHTML = '';
-            const video = document.getElementById('video');
-            cur = stream;
-            video.srcObject = stream;
-            video.play();
-          }).catch((e) => {
-            document.getElementById('js-camera').innerHTML = 'Cannot use camera: ' + e;
-            //$('.js-camera').html('Cannot use camera: ' + a);
-          });
-        }
-      }
-
-      function videoStop() {
-        if (cur !== null) {
-          cur.getVideoTracks().forEach((camera) => {
-            camera.stop();
-          });
-          cur = null;
-        }
-      }
-
-      function videoChangeCamera() {
-        if (setting.video.facingMode == 'user') {
-          setting.video.facingMode = { exact: 'environment' };
-        } else {
-          setting.video.facingMode = 'user';
-        }
-        if (cur !== null) {
-          videoStop();
-          videoStart();
-        }
-      }
-
-      // 重力加速度センサー
-
-      let gravitySensor = new GravitySensor({ frequency: 6 });
-
-      gravitySensor.addEventListener("reading", (e) => {
-        console.log(`X 軸方向の重力 ${gravitySensor.x}`);
-        console.log(`Y 軸方向の重力 ${gravitySensor.y}`);
-        console.log(`Z 軸方向の重力 ${gravitySensor.z}`);
-        document.getElementById('gravityXSpan').innerHTML = gravitySensor.x;
-        document.getElementById('gravityYSpan').innerHTML = gravitySensor.y;
-        document.getElementById('gravityZSpan').innerHTML = gravitySensor.z;
-      });
-
-      gravitySensor.start();
-
-      // 加速度センサー
-
-      const acl = new Accelerometer({ frequency: 60 });
-      acl.addEventListener("reading", () => {
-        console.log(`X 軸方向の加速度 ${acl.x}`);
-        console.log(`Y 軸方向の加速度 ${acl.y}`);
-        console.log(`Z 軸方向の加速度 ${acl.z}`);
-        document.getElementById('accelerationXSpan').innerHTML = acl.x;
-        document.getElementById('accelerationYSpan').innerHTML = acl.y;
-        document.getElementById('accelerationZSpan').innerHTML = acl.z;
-      });
-
-      acl.start();
-    </script>
+  <h2>アクチュエーター編</h2>
+  <p>ネタ。ディスプレイ、スピーカー、バイブレーション</p>
 </body>
 
 </html>
