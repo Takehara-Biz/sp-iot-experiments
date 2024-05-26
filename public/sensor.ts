@@ -4,12 +4,25 @@ class CameraManager {
   private setting = {
     audio: false,
     video: {
-      //width: 100%,
-      height: 300,
+      width: 100,
+      height: 100,
       facingMode: { exact: 'environment' },
       // facingMode: 'user',
     },
   };
+
+  public snapShotBase64 = ""
+
+  constructor(){
+    setInterval(() => {
+      const video = document.getElementById('video')! as HTMLVideoElement;
+      const canvas = document.getElementById('snapShotCanvas')! as HTMLCanvasElement;
+      canvas.getContext('2d')!.drawImage(video, 0, 0, canvas.width, canvas.height);
+      const snapShotBase64TextArea = document.getElementById('snapShotBase64')! as HTMLInputElement;
+      snapShotBase64TextArea.innerText = canvas.toDataURL();
+      this.snapShotBase64 = canvas.toDataURL();
+    }, 2000);
+  }
 
   videoStart() {
     this.videoStop();
@@ -218,8 +231,11 @@ class JsonDataManager {
         "x": gravitySensorManager.x,
         "y": gravitySensorManager.y,
         "z": gravitySensorManager.z,
-
-      }
+      },
+      "uploadDateTime": new Date().toISOString()
+    };
+    if(cameraManager.snapShotBase64 !== ""){
+      this.jsonData = Object.assign(this.jsonData, {"cameraSnapShotBase64": cameraManager.snapShotBase64});
     }
   }
 }

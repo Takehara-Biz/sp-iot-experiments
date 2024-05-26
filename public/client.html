@@ -26,6 +26,7 @@
     <div class="ui bottom attached tab segment active" data-tab="first">
       <p>本サイトは、javascript（「Sensor API」や「MediaDevices」など）を利用して、スマホのセンサーやアクチュエーターを操作するための実験用のWebページである。</p>
       <p>本ページは、PCではなく、スマートフォンのブラウザからアクセスすること。</p>
+      <p>実際にセンサーやアクチュエーターを操作できるかどうかは、端末、OS、ブラウザに依存する。</p>
       <p>以下の特徴を持つ。</p>
       <ol>
         <li>スマホのセンサー値を画面上に表示できる</li>
@@ -45,8 +46,15 @@
         </div>
         <div>
           <p id="js-camera"></p>
-          <div style="border:1px solid black;">
-            <video width="100%" height="300px" id="video" autoplay="autoplay"></video>
+          <div style="border:1px solid black; padding: 20px;">
+            <video width="100px" height="100px" id="video" autoplay="autoplay"></video>
+          </div>
+          <div>
+            <p>スナップショット画像</p>
+            <canvas id="snapShotCanvas" width="100px" height="100px"></canvas>
+            <br/>
+            base64化<br/>
+            <textarea type="text" id="snapShotBase64" rows="4" style="width: 100%;"></textarea>
           </div>
         </div>
       </div>

@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  <script src="./server.js"></script>
 </head>
 <body>
   <h1>アクチュエーターへの命令を登録する画面</h1>
@@ -15,5 +16,9 @@
     <button type="submit">送信</button>
   </form>
   <p>命令は、Node.jsプログラムを再起動するとリセットされる。</p>
+  <h1>最新のアップロード済みデータ</h1>
+  <textarea id="latestUploadedSensorData" style="width: 100%;" rows="4"></textarea>
+  画像<br />
+  <img id="latestCameraSnapShot" width="100px" height="100px" />
 </body>
 </html>

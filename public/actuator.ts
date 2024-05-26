@@ -16,7 +16,6 @@ class AudioManager {
   ready(){
     const source = document.getElementById('audioSource')! as HTMLSourceElement;
     source.src = sampleAudioSrc;
-    console.log("aa! " + source.src);
   }
 }
 const audioManager = new AudioManager();
