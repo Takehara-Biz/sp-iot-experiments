@@ -4,68 +4,115 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.5.0/dist/semantic.min.css">
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.5.0/dist/semantic.min.js"></script>
   <title>スマホIoT実験室</title>
-  <script src="./client.js"></script>
+  <script src="./sensor.js"></script>
+  <script src="./audio-base64.js"></script>
+  <script src="./actuator.js"></script>
+  <script src="./for-semantic-ui.js"></script>
 </head>
 
 <body>
-  <h1>スマホIoT実験室</h1>
-  <p>ブラウザの、「Sensor API」&「MediaDevices」実験室</p>
-  <h2>センサー編</h2>
-  <div>
-    <h3>カメラ</h3>
-    <a href="https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia" target="_blank" rel="noopener">MediaDevices: getUserMedia()</a>
-    <div>
-      <button onclick="cameraManager.videoStart();">開始</button>
-      <button onclick="cameraManager.videoStop();">停止</button>
-      <button onclick="cameraManager.videoChangeCamera();">切替</button>
+  <div class="ui container">
+    <h1>スマホIoT実験室</h1>
+    <p>ブラウザの、「Sensor API」&「MediaDevices」実験室</p>
+    <div class="ui top attached tabular menu">
+      <a class="item" data-tab="first">First</a>
+      <a class="item" data-tab="second">Second</a>
+      <a class="item active" data-tab="third">Third</a>
     </div>
+    <div class="ui bottom attached tab segment" data-tab="first">
+      First
+    </div>
+    <div class="ui bottom attached tab segment" data-tab="second">
+      Second
+    </div>
+    <div class="ui bottom attached tab segment active" data-tab="third">
+      Third
+    </div>
+    <h2>センサー編</h2>
     <div>
-      <p id="js-camera"></p>
-      <div style="border:1px solid black;">
-        <video width="100%" height="300px" id="video" autoplay="autoplay"></video>
+      <h3>カメラ</h3>
+      <a href="https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia" target="_blank"
+        rel="noopener">MediaDevices: getUserMedia()</a>
+      <div>
+        <button onclick="cameraManager.videoStart();">開始</button>
+        <button onclick="cameraManager.videoStop();">停止</button>
+        <button onclick="cameraManager.videoChangeCamera();">切替</button>
+      </div>
+      <div>
+        <p id="js-camera"></p>
+        <div style="border:1px solid black;">
+          <video width="100%" height="300px" id="video" autoplay="autoplay"></video>
+        </div>
       </div>
     </div>
-  </div>
-  <div>
-    <h3>重力加速度センサー</h3>
-    <a href="https://developer.mozilla.org/en-US/docs/Web/API/GravitySensor" target="_blank" rel="noopener">GravitySensor</a>
-    <p>0から変わらない場合は、お使いの端末またはブラウザが、重力加速度センサーの取得に対応しておりません。</p>
-    <p>X（左右）<span id="gravityXSpan">0</span></p>
-    <p>Y（上下）<span id="gravityYSpan">0</span></p>
-    <p>Z（前後）<span id="gravityZSpan">0</span></p>
-  </div>
-  <div>
-    <h3>加速度センサー</h3>
-    <a href="https://developer.mozilla.org/en-US/docs/Web/API/Accelerometer" target="_blank" rel="noopener">Accelerometer</a>
-    <p>0から変わらない場合は、お使いの端末またはブラウザが、加速度センサーの取得に対応しておりません。</p>
-    <p>X（左右）<span id="accelerationXSpan">0</span></p>
-    <p>Y（上下）<span id="accelerationYSpan">0</span></p>
-    <p>Z（前後）<span id="accelerationZSpan">0</span></p>
-  </div>
-  <div>
-    <h3>コンパス（方位）</h3>
-    <a href="https://developer.mozilla.org/en-US/docs/Web/API/DeviceOrientationEvent" target="_blank" rel="noopener">DeviceOrientationEvent</a>
-    <p>（どうも精度が低い気がする・・。）</p>
-    <p>0から変わらない場合は、お使いの端末またはブラウザが、コンパス（方位）の取得に対応しておりません。</p>
-    <p>Result&nbsp;<span id="deviceOrientResult"></span></p>
-    <p>AdjustedValue&nbsp;<span id="deviceOrientationAdjustedValue">0</span></p>
-    <p>Absolute&nbsp;<span id="deviceOrientationAbsolute">0</span></p>
-    <p>Alpha&nbsp;<span id="deviceOrientationAlpha">0</span></p>
-    <p>Beta&nbsp;&nbsp;<span id="deviceOrientationBeta">0</span></p>
-    <p>Gamma&nbsp;<span id="deviceOrientationGamma">0</span></p>
-  </div>
-  <h2>アクチュエーター編</h2>
-  <p>ネタ。ディスプレイ、スピーカー、バイブレーション</p>
-  <h2>JSONデータ</h2>
-  <div>
     <div>
-      <input type="checkbox" id="sendFlag" />
-      <label for="sendFlag">定期的にJSONデータを送信する</label>
+      <h3>重力加速度センサー</h3>
+      <a href="https://developer.mozilla.org/en-US/docs/Web/API/GravitySensor" target="_blank"
+        rel="noopener">GravitySensor</a>
+      <p>0から変わらない場合は、お使いの端末またはブラウザが、重力加速度センサーの取得に対応しておりません。</p>
+      <p>X（左右）<span id="gravityXSpan">0</span></p>
+      <p>Y（上下）<span id="gravityYSpan">0</span></p>
+      <p>Z（前後）<span id="gravityZSpan">0</span></p>
     </div>
-  </div>
-  <div width="100%">
-  <textarea id="jsonData" style="box-sizing:border-box; width:100%;" rows="20"></textarea>
+    <div>
+      <h3>加速度センサー</h3>
+      <a href="https://developer.mozilla.org/en-US/docs/Web/API/Accelerometer" target="_blank"
+        rel="noopener">Accelerometer</a>
+      <p>0から変わらない場合は、お使いの端末またはブラウザが、加速度センサーの取得に対応しておりません。</p>
+      <p>X（左右）<span id="accelerationXSpan">0</span></p>
+      <p>Y（上下）<span id="accelerationYSpan">0</span></p>
+      <p>Z（前後）<span id="accelerationZSpan">0</span></p>
+    </div>
+    <div>
+      <h3>コンパス（方位）</h3>
+      <a href="https://developer.mozilla.org/en-US/docs/Web/API/DeviceOrientationEvent" target="_blank"
+        rel="noopener">DeviceOrientationEvent</a>
+      <p>（どうも精度が低い気がする・・。）</p>
+      <p>0から変わらない場合は、お使いの端末またはブラウザが、コンパス（方位）の取得に対応しておりません。</p>
+      <p>Result&nbsp;<span id="deviceOrientResult"></span></p>
+      <p>AdjustedValue&nbsp;<span id="deviceOrientationAdjustedValue">0</span></p>
+      <p>Absolute&nbsp;<span id="deviceOrientationAbsolute">0</span></p>
+      <p>Alpha&nbsp;<span id="deviceOrientationAlpha">0</span></p>
+      <p>Beta&nbsp;&nbsp;<span id="deviceOrientationBeta">0</span></p>
+      <p>Gamma&nbsp;<span id="deviceOrientationGamma">0</span></p>
+    </div>
+    <h2>JSONデータ</h2>
+    <div>
+      <div>
+        <input type="checkbox" id="sendFlag" />
+        <label for="sendFlag">定期的にJSONデータを送信する</label>
+      </div>
+    </div>
+    <div width="100%">
+      <textarea id="jsonData" style="box-sizing:border-box; width:100%;" rows="20"></textarea>
+    </div>
+    <h2>アクチュエーター編</h2>
+    <p>ネタ。ディスプレイ、スピーカー、振動</p>
+    <h2>ディスプレイ（ただのDOM操作）</h2>
+    <div>
+      <p id="output">ここが置き換わります。</p>
+      <button onclick="displayManager.replace();">
+        文字列を書き換える
+      </button>
+    </div>
+    <div>
+      <h2>スピーカー</h2>
+      <div>
+        <audio controls="controls" autobuffer="autobuffer" autoplay="autoplay" id="audioSource">
+        </audio>
+      </div>
+    </div>
+    <div>
+      <h3>振動</h3>
+      <a href="https://developer.mozilla.org/en-US/docs/Web/API/Navigator/vibrate" target="_blank"
+        rel="noopener">Navigator: vibrate()</a>
+      <br />
+      <button id="vibrate" onclick="vibrationManager.vibrate();">振動させる</button>
+    </div>
   </div>
 </body>
 
