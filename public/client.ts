@@ -54,16 +54,16 @@ const cameraManager = new CameraManager();
 class GravitySensorManager {
   constructor() {
     let gravitySensor = new GravitySensor({ frequency: 1 });
-    gravitySensor.addEventListener("reading", (e) => {
+    gravitySensor.addEventListener("reading", (_e: Event) => {
       console.log(`X 軸方向の重力 ${gravitySensor.x}`);
       console.log(`Y 軸方向の重力 ${gravitySensor.y}`);
       console.log(`Z 軸方向の重力 ${gravitySensor.z}`);
-      document.getElementById('gravityXSpan')!.innerHTML = gravitySensor.x;
-      document.getElementById('gravityYSpan')!.innerHTML = gravitySensor.y;
-      document.getElementById('gravityZSpan')!.innerHTML = gravitySensor.z;
-      this.x = gravitySensor.x;
-      this.y = gravitySensor.y;
-      this.z = gravitySensor.z;
+      document.getElementById('gravityXSpan')!.innerHTML = '' + gravitySensor.x;
+      document.getElementById('gravityYSpan')!.innerHTML = '' + gravitySensor.y;
+      document.getElementById('gravityZSpan')!.innerHTML = '' + gravitySensor.z;
+      this.x = gravitySensor.x!;
+      this.y = gravitySensor.y!;
+      this.z = gravitySensor.z!;
     });
 
     gravitySensor.start();
@@ -83,12 +83,12 @@ class AccelerometerManager {
       console.log(`X 軸方向の加速度 ${acl.x}`);
       console.log(`Y 軸方向の加速度 ${acl.y}`);
       console.log(`Z 軸方向の加速度 ${acl.z}`);
-      document.getElementById('accelerationXSpan')!.innerHTML = acl.x;
-      document.getElementById('accelerationYSpan')!.innerHTML = acl.y;
-      document.getElementById('accelerationZSpan')!.innerHTML = acl.z;
-      this.x = acl.x;
-      this.y = acl.y;
-      this.z = acl.z;
+      document.getElementById('accelerationXSpan')!.innerHTML = '' + acl.x;
+      document.getElementById('accelerationYSpan')!.innerHTML = '' + acl.y;
+      document.getElementById('accelerationZSpan')!.innerHTML = '' + acl.z;
+      this.x = acl.x!;
+      this.y = acl.y!;
+      this.z = acl.z!;
     });
 
     acl.start();
