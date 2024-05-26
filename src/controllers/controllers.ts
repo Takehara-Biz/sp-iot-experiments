@@ -29,8 +29,8 @@ export const routing = ((app: Express): void => {
     }
   });
 
-  app.get('/add-order', (_req, res) => {
-    res.sendFile(path.join(__dirname, '..', '/views/add-order.html'));
+  app.get('/server-side', (_req, res) => {
+    res.sendFile(path.join(__dirname, '..', '/views/server-side.html'));
   });
 
   app.post('/order', (req, res) => {
@@ -38,7 +38,7 @@ export const routing = ((app: Express): void => {
 
     orderManager.enqueue(req.body.printString, req.body.vibrateFlag);
 
-    res.redirect('/add-order');
+    res.redirect('/server-side');
   });
 
   app.get('/order', (req, res) => {
