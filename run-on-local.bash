@@ -1,4 +1,4 @@
 #!/bin/bash
 
 tsc ./public/*.ts
-npx ts-node index.ts
+npx ts-node src/index.ts

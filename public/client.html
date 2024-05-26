@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 
 <head>
   <meta charset="UTF-8">
@@ -11,6 +11,7 @@
   <script src="./sensor.js"></script>
   <script src="./audio-base64.js"></script>
   <script src="./actuator.js"></script>
+  <script src="./get-order.js"></script>
   <script src="./for-semantic-ui.js"></script>
 </head>
 
@@ -24,6 +25,7 @@
     </div>
     <div class="ui bottom attached tab segment active" data-tab="first">
       <p>本サイトは、javascript（「Sensor API」や「MediaDevices」など）を利用して、スマホのセンサーやアクチュエーターを操作するための実験用のWebページである。</p>
+      <p>本ページは、PCではなく、スマートフォンのブラウザからアクセスすること。</p>
       <p>以下の特徴を持つ。</p>
       <ol>
         <li>スマホのセンサー値を画面上に表示できる</li>
@@ -79,7 +81,7 @@
         <p>Beta&nbsp;&nbsp;<span id="deviceOrientationBeta">0</span></p>
         <p>Gamma&nbsp;<span id="deviceOrientationGamma">0</span></p>
       </div>
-      <h2>JSONデータ</h2>
+      <h2>送信JSONデータ</h2>
       <div>
         <div>
           <input type="checkbox" id="sendFlag" />
@@ -107,11 +109,15 @@
         </div>
       </div>
       <div>
-        <h3>振動</h3>
+        <h2>振動</h2>
         <a href="https://developer.mozilla.org/en-US/docs/Web/API/Navigator/vibrate" target="_blank"
           rel="noopener">Navigator: vibrate()</a>
         <br />
         <button id="vibrate" class="ui button" onclick="vibrationManager.vibrate();">振動させる</button>
+      </div>
+      <div>
+        <h2>受信JSONデータ</h2>
+        <div id="get-order"></div>
       </div>
     </div>
   </div>

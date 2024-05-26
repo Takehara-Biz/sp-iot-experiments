@@ -1,7 +1,7 @@
 class CameraManager {
 
-  mediaStream: MediaStream | null = null;
-  setting = {
+  private mediaStream: MediaStream | null = null;
+  private setting = {
     audio: false,
     video: {
       //width: 100%,
@@ -235,8 +235,8 @@ class SendJSONDataManager {
         'Content-Type': 'application/json'
       },
       body: sendData
-    }).then((response) => {
-      console.log('response! ' + response);
+    }).then((response: Response) => {
+      console.log('response! ' + response.json());
     }).catch((error) => {
       console.error('error! ' + error);
     });
