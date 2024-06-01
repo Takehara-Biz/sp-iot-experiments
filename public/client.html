@@ -8,12 +8,17 @@
   <script src="https://code.jquery.com/jquery-3.3.1.slim.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.5.0/dist/semantic.min.js"></script>
   <title>スマホIoT実験室</title>
+  <script src="./sensors/accelerometer-manager.js"></script>
   <script src="./sensors/camera-manager.js"></script>
+  <script src="./sensors/device-orientation-manager.js"></script>
+  <script src="./sensors/geolocation-manager.js"></script>
+  <script src="./sensors/gravity-sensor-manager.js"></script>
   <script src="./sensor.js"></script>
   <script src="./audio-base64.js"></script>
   <script src="./actuator.js"></script>
   <script src="./get-order.js"></script>
   <script src="./for-semantic-ui.js"></script>
+  <script src="./client.js"></script>
 </head>
 
 <body>
@@ -61,6 +66,10 @@
       </div>
       <div>
         <h2>重力加速度センサー</h2>
+        <div class="ui fitted toggle checkbox">
+          <input type="checkbox" onchange="onChangeGravitySensorManagerCheckBox(event);">
+          <label></label>
+        </div>
         <a href="https://developer.mozilla.org/en-US/docs/Web/API/GravitySensor" target="_blank"
           rel="noopener">GravitySensor</a>
         <p>0から変わらない場合は、お使いの端末またはブラウザが、重力加速度センサーの取得に対応しておりません。</p>
