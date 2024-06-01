@@ -13,7 +13,7 @@ class CameraManager {
 
   public snapShotBase64 = ""
 
-  constructor(){
+  constructor() {
     setInterval(() => {
       const video = document.getElementById('video')! as HTMLVideoElement;
       const canvas = document.getElementById('snapShotCanvas')! as HTMLCanvasElement;
@@ -227,15 +227,24 @@ class JsonDataManager {
   jsonData = {};
   collectData(): void {
     this.jsonData = {
-      "GravitySensor": {
-        "x": gravitySensorManager.x,
-        "y": gravitySensorManager.y,
-        "z": gravitySensorManager.z,
+      deviceOrientation : {
+        alpha: deviceOrientationManager.alpha,
+        beta: deviceOrientationManager.beta,
+        gamma: deviceOrientationManager.gamma
       },
-      "uploadDateTime": new Date().toISOString()
+      geolocation : {
+        lat: geolocationManager.lat,
+        lng: geolocationManager.lng
+      },
+      gravitySensor : {
+        x: gravitySensorManager.x,
+        y: gravitySensorManager.y,
+        z: gravitySensorManager.z,
+      },
+      uploadDateTime : new Date().toISOString()
     };
-    if(cameraManager.snapShotBase64 !== ""){
-      this.jsonData = Object.assign(this.jsonData, {"cameraSnapShotBase64": cameraManager.snapShotBase64});
+    if (cameraManager.snapShotBase64 !== "") {
+      this.jsonData = Object.assign(this.jsonData, { "cameraSnapShotBase64": cameraManager.snapShotBase64 });
     }
   }
 }
@@ -261,7 +270,28 @@ class SendJSONDataManager {
 const sendJSONDataManager = new SendJSONDataManager();
 setInterval(() => {
   const checkBox = document.getElementById('sendFlag')! as HTMLInputElement;
-  if(checkBox.checked){
+  if (checkBox.checked) {
     sendJSONDataManager.send();
   }
 }, 3000);
+
+class GeolocationManager {
+  lat: number = 0.0;
+  lng: number = 0.0;
+  constructor() {
+    if ("geolocation" in navigator) {
+      /* geolocation is available */
+      setInterval(() => {
+        navigator.geolocation.getCurrentPosition((position) => {
+          this.lat = position.coords.latitude;
+          this.lng = position.coords.longitude;
+          document.getElementById('positionLatSpan')!.innerText = '' + this.lat;
+          document.getElementById('positionLngSpan')!.innerText = '' + this.lng;
+        });
+      }, 3000);
+    } else {
+      /* geolocation IS NOT available */
+    }
+  }
+}
+const geolocationManager = new GeolocationManager();
