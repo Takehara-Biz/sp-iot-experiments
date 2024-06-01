@@ -1,6 +1,6 @@
 class DisplayManager {
   replace(){
-    document.getElementById('output')!.innerHTML = "あああ";
+    document.getElementById('output')!.innerHTML = new Date().toISOString();
   }
 }
 const displayManager = new DisplayManager();
