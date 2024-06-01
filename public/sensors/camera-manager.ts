@@ -56,6 +56,8 @@ class CameraManager implements ManagerInterface {
     }
     clearInterval(this.intervalId);
     
+    const canvas = document.getElementById('snapShotCanvas')! as HTMLCanvasElement;
+    canvas.getContext('2d')!.clearRect(0, 0, canvas.width, canvas.height);
     document.getElementById('snapShotBase64')!.innerText = '';
   }
 
