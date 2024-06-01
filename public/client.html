@@ -26,8 +26,9 @@
     <h1>スマホIoT実験室</h1>
     <div class="ui top attached tabular menu">
       <a class="item active" data-tab="first">はじめに</a>
-      <a class="item" data-tab="second">センサー編</a>
-      <a class="item" data-tab="third">アクチュエーター編</a>
+      <a class="item" data-tab="second">センサー値の取得と表示</a>
+      <a class="item" data-tab="third">センサー値の送信設定</a>
+      <a class="item" data-tab="fourth">アクチュエーター編</a>
     </div>
     <div class="ui bottom attached tab segment active" data-tab="first">
       <p>本サイトは、javascript（「Sensor API」や「MediaDevices」など）を利用して、スマホのセンサーやアクチュエーターを操作するための実験用のWebページである。</p>
@@ -43,12 +44,14 @@
     <div class="ui bottom attached tab segment" data-tab="second">
       <div>
         <h2>カメラ</h2>
+        <div class="ui toggle checkbox">
+          <input type="checkbox" onchange="onChangeCameraManagerCheckBox(event);">
+          <label></label>
+        </div>
         <a href="https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia" target="_blank"
           rel="noopener">MediaDevices: getUserMedia()</a>
         <div>
-          <button class="ui button" onclick="cameraManager.videoStart();">開始</button>
-          <button class="ui button" onclick="cameraManager.videoStop();">停止</button>
-          <button class="ui button" onclick="cameraManager.videoChangeCamera();">切替</button>
+          <button id="changeCameraId" class="ui button" disabled onclick="cameraManager.videoChangeCamera();">切替</button>
         </div>
         <div>
           <p id="js-camera"></p>
@@ -66,7 +69,7 @@
       </div>
       <div>
         <h2>重力加速度センサー</h2>
-        <div class="ui fitted toggle checkbox">
+        <div class="ui toggle checkbox">
           <input type="checkbox" onchange="onChangeGravitySensorManagerCheckBox(event);">
           <label></label>
         </div>
@@ -88,6 +91,10 @@
       </div>
       <div>
         <h2>コンパス（方位）</h2>
+        <div class="ui toggle checkbox">
+          <input type="checkbox" onchange="onChangeDeviceOrientationManagerCheckBox(event);">
+          <label></label>
+        </div>
         <a href="https://developer.mozilla.org/en-US/docs/Web/API/DeviceOrientationEvent" target="_blank"
           rel="noopener">DeviceOrientationEvent</a>
         <p>（どうも精度が低い気がする・・。）</p>
@@ -101,15 +108,21 @@
       </div>
       <div>
         <h2>位置情報</h2>
+        <div class="ui toggle checkbox">
+          <input type="checkbox" onchange="onChangeGeolocationManagerCheckBox(event);">
+          <label></label>
+        </div>
         <a href="https://developer.mozilla.org/en-US/docs/Web/API/Geolocation_API/Using_the_Geolocation_API" target="_blank"
           rel="noopener">Accelerometer</a>
         <p>0から変わらない場合は、お使いの端末またはブラウザが、位置情報の取得に対応しておりません。</p>
         <p>lat（緯度）<span id="positionLatSpan">0.0</span></p>
         <p>lng（経度）<span id="positionLngSpan">0.0</span></p>
       </div>
+    </div>
+    <div class="ui bottom attached tab segment" data-tab="third">
       <h2>送信JSONデータ</h2>
       <div>
-        <div>
+        <div class="ui toggle checkbox">
           <input type="checkbox" id="sendFlag" />
           <label for="sendFlag">定期的にJSONデータを送信する</label>
         </div>
@@ -118,7 +131,7 @@
         <textarea id="jsonData" style="box-sizing:border-box; width:100%;" rows="20"></textarea>
       </div>
     </div>
-    <div class="ui bottom attached tab segment" data-tab="third">
+    <div class="ui bottom attached tab segment" data-tab="fourth">
       <p>ネタ。ディスプレイ、スピーカー、振動</p>
       <h2>ディスプレイ（ただのDOM操作）</h2>
       <div>

@@ -1,28 +1,36 @@
 // コンパス（方位）
 
-class DeviceOrientationManager {
+class DeviceOrientationManager implements ManagerInterface{
 
-  constructor() {
-    window.addEventListener("deviceorientationabsolute", (event: DeviceOrientationEvent) => {
-      if (new Date().getTime() < this.lastEventDateTime + 1000) {
-        return;
-      }
+  isRecording = false;
+  start() {
+    window.addEventListener("deviceorientationabsolute", this.listener);
+    this.isRecording = true;
+  }
+  stop(){
+    this.isRecording = false;
+    window.removeEventListener("deviceorientationabsolute", this.listener);
+  }
 
-      console.log(`${event.alpha} : ${event.beta} : ${event.gamma}`);
-      const adjustedValue = this.compassHeading(event.alpha!, event.beta!, event.gamma!);
-      document.getElementById('deviceOrientationAdjustedValue')!.innerHTML = '' + adjustedValue;
-      document.getElementById('deviceOrientationAbsolute')!.innerHTML = '' + event.absolute;
-      document.getElementById('deviceOrientationAlpha')!.innerHTML = '' + event.alpha;
-      document.getElementById('deviceOrientationBeta')!.innerHTML = '' + event.beta;
-      document.getElementById('deviceOrientationGamma')!.innerHTML = '' + event.gamma;
-      document.getElementById('deviceOrientResult')!.innerHTML = this.judgeOrient(event);
-      this.adjustedValue = adjustedValue;
-      this.absolute = event.absolute;
-      this.alpha = event.alpha!;
-      this.beta = event.beta!;
-      this.gamma = event.gamma!;
-      this.lastEventDateTime = new Date().getTime();
-    });
+  private listener(event: DeviceOrientationEvent) {
+    if (new Date().getTime() < this.lastEventDateTime + 1000) {
+      return;
+    }
+
+    console.log(`${event.alpha} : ${event.beta} : ${event.gamma}`);
+    const adjustedValue = this.compassHeading(event.alpha!, event.beta!, event.gamma!);
+    document.getElementById('deviceOrientationAdjustedValue')!.innerHTML = '' + adjustedValue;
+    document.getElementById('deviceOrientationAbsolute')!.innerHTML = '' + event.absolute;
+    document.getElementById('deviceOrientationAlpha')!.innerHTML = '' + event.alpha;
+    document.getElementById('deviceOrientationBeta')!.innerHTML = '' + event.beta;
+    document.getElementById('deviceOrientationGamma')!.innerHTML = '' + event.gamma;
+    document.getElementById('deviceOrientResult')!.innerHTML = this.judgeOrient(event);
+    this.adjustedValue = adjustedValue;
+    this.absolute = event.absolute;
+    this.alpha = event.alpha!;
+    this.beta = event.beta!;
+    this.gamma = event.gamma!;
+    this.lastEventDateTime = new Date().getTime();
   }
 
   lastEventDateTime: number = 0;
@@ -32,7 +40,7 @@ class DeviceOrientationManager {
   beta: number = 0;
   gamma: number = 0;
 
-  compassHeading(alpha: number, beta: number, gamma: number) {
+  private compassHeading(alpha: number, beta: number, gamma: number) {
     var degtorad = Math.PI / 180; /*  度° ↔ ラジアン 間の換算用  */
 
     var _x = beta ? beta * degtorad : 0; // β 値
@@ -65,7 +73,7 @@ class DeviceOrientationManager {
   }
 
   // ジャイロスコープと地磁気をセンサーから取得
-  judgeOrient(event: any): string {
+  private judgeOrient(event: any): string {
     let absolute = event.absolute;
     let alpha = event.alpha;
     let beta = event.beta;

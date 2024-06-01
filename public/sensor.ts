@@ -24,17 +24,25 @@ class JsonDataManager {
   jsonData = {};
   collectData(): void {
     this.jsonData = {
-      deviceOrientation: {
-        alpha: deviceOrientationManager.alpha,
-        beta: deviceOrientationManager.beta,
-        gamma: deviceOrientationManager.gamma
-      },
-      geolocation: {
-        lat: geolocationManager.lat,
-        lng: geolocationManager.lng
-      },
       uploadDateTime: new Date().toISOString()
     };
+    if (deviceOrientationManager.isRecording) {
+      this.jsonData = Object.assign(this.jsonData, {
+        deviceOrientation: {
+          alpha: deviceOrientationManager.alpha,
+          beta: deviceOrientationManager.beta,
+          gamma: deviceOrientationManager.gamma
+        },
+      });
+    }
+    if (geolocationManager.isRecording) {
+      this.jsonData = Object.assign(this.jsonData, {
+        geolocation: {
+          lat: geolocationManager.lat,
+          lng: geolocationManager.lng
+        },
+      });
+    }
     if (gravitySensorManager.isRecording) {
       this.jsonData = Object.assign(this.jsonData, {
         gravitySensor: {
@@ -44,7 +52,7 @@ class JsonDataManager {
         }
       });
     }
-    if (cameraManager.snapShotBase64 !== "") {
+    if (cameraManager.isRecording) {
       this.jsonData = Object.assign(this.jsonData, { cameraSnapShotBase64: cameraManager.snapShotBase64 });
     }
   }
