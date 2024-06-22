@@ -1,6 +1,13 @@
 export class LogUtil {
-  static info(jsonStr: string): void {
+  static simplifyJsonForLogging(jsonData: any): string{
+    const clone = structuredClone(jsonData);
+    if(clone.cameraSnapShotBase64) {
+      clone.cameraSnapShotBase64 = "(omitted for logging)";
+    }
+    return JSON.stringify(clone);
+  }
+  static info(message: string): void {
     //const date = new Date().toLocaleString();
-    console.info("[ INFO] " + jsonStr.substring(0, 120) + "...");
+    console.info("[ INFO] " + message);
   }
 }

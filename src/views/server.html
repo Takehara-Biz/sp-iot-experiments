@@ -23,26 +23,29 @@
 
   <div class="ui container" style="margin-top: 64px;">
     <p>Access this page from <strong>a web browser of your PC</strong>, not smartphone</p>
-    <h1>Setting an order</h1>
 
-    <p>Make your order</p>
-    <form action="/order" method="POST" class="ui form">
-      <div class="field">
-        <label>String to print</label>
-        <input type="text" id="printString" name="printString" class="ui input"/>
-      </div>
-      <div class="field">
-        <label>Vibrate</label>
-        <input type="checkbox" id="vibrateFlag" name="vibrateFlag" class="ui checkbox" />
-      </div>
-      <button type="submit" class="ui button">Send</button>
-    </form>
+    <div>
+      <h1>Latest uploaded sensor data</h1>
+      <pre id="latestUploadedSensorData" style="width: 100%;" rows="8"></pre>
+      uploaded image<br />
+      <img id="latestCameraSnapShot" width="100px" height="100px" />
+    </div>
 
-    <h2>Latest uploaded sensor data</h2>
-    <pre id="latestUploadedSensorData" style="width: 100%;" rows="8"></pre>
-    uploaded image<br />
-    <img id="latestCameraSnapShot" width="100px" height="100px" />
-  </div>
+    <div>
+      <h1>Setting an order</h1>
+      <p>Make your order</p>
+      <form action="/order" method="POST" class="ui form">
+        <div class="field">
+          <label>String to print</label>
+          <input type="text" id="printString" name="printString" class="ui input" />
+        </div>
+        <div class="field">
+          <label>Vibrate</label>
+          <input type="checkbox" id="vibrateFlag" name="vibrateFlag" class="ui checkbox" />
+        </div>
+        <button type="submit" class="ui button">Send</button>
+      </form>
+    </div>
   </div>
 </body>
 

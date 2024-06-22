@@ -7,15 +7,14 @@ class GetOrderManager {
           'Content-Type': 'application/json'
         }
       }).then(async (response: Response) => {
-        const jsonData = await response.json();
+        const jsonStr = await response.json();
         
-        if(jsonData !== null){
-          console.log('response! ' + jsonData);
-          document.getElementById('get-order')!.innerHTML = jsonData
-          const jsonData2 = JSON.parse(jsonData);
-          //console.log('response2! ' + jsonData2);
-          document.getElementById('output')!.innerHTML = jsonData2["printString"];
-          if(jsonData2["vibrateFlag"] === "on"){
+        if(jsonStr !== null){
+          console.log('response! ' + jsonStr);
+          const jsonData = JSON.parse(jsonStr);
+          document.getElementById('get-order')!.innerHTML = JSON.stringify(JSON.parse(jsonStr), null, 2);
+          document.getElementById('output')!.innerHTML = jsonData["printString"];
+          if(jsonData["vibrateFlag"] === "on"){
             vibrationManager.vibrate();
           }
         }
