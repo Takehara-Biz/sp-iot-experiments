@@ -3,6 +3,7 @@ import { orderManager } from "../models/orderManager";
 import { SensorDataDto } from "../models/sensorDataDto";
 import path from 'path'
 import { uploadSensorDataManager } from "../models/uploadSensorDataManager";
+import { LogUtil } from "../utils/logUtil";
 
 export const routing = ((app: Express): void => {
 
@@ -12,9 +13,8 @@ export const routing = ((app: Express): void => {
 
   app.post('/sensor-data', (req, res) => {
     const jsonData = req.body;
-    console.log('jsonData!');
-    console.log(JSON.stringify(jsonData).substring(0, 120) + "...");
-    const dto = new SensorDataDto(req.body.GravitySensor.X, req.body.GravitySensor.Y, req.body.GravitySensor.Z, req.body.cameraSnapShotBase64, req.body.uploadDateTime, new Date());
+    LogUtil.info(JSON.stringify(jsonData));
+    const dto = new SensorDataDto(jsonData.gravitySensor.x, jsonData.gravitySensor.y, jsonData.gravitySensor.z, jsonData.cameraSnapShotBase64, jsonData.uploadDateTime, new Date());
     uploadSensorDataManager.replace(dto);
     res.send('OK');
   });
@@ -24,7 +24,7 @@ export const routing = ((app: Express): void => {
       res.json(null);
     } else {
       const jsonDataStr = JSON.stringify(uploadSensorDataManager.latestSensorData);
-      console.log('called GET /sensor-data ' + jsonDataStr);
+      LogUtil.info(JSON.stringify(jsonDataStr));
       res.json(jsonDataStr);
     }
   });
