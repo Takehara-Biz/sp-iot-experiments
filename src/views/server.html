@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.5.0/dist/semantic.min.css">
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.5.0/dist/semantic.min.js"></script>
+  <title>SIL (Smartphone Iot Lab) Server Page</title>
+  <script src="./server.js"></script>
+</head>
+
+<body>
+  <div class="ui fixed inverted menu">
+    <div class="ui container">
+      <a href="#" class="header item">
+        <img class="logo" src="/images/semantic-ui-logo.png">
+        <span style="margin-left: 10px;">SIL (Smartphone Iot Lab) Server Page</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="ui container" style="margin-top: 64px;">
+    <p>Access this page from <strong>a web browser of your PC</strong>, not smartphone</p>
+    <h1>Setting an order</h1>
+
+    <p>Make your order</p>
+    <form action="/order" method="POST" class="ui form">
+      <div class="field">
+        <label>String to print</label>
+        <input type="text" id="printString" name="printString" class="ui input"/>
+      </div>
+      <div class="field">
+        <label>Vibrate</label>
+        <input type="checkbox" id="vibrateFlag" name="vibrateFlag" class="ui checkbox" />
+      </div>
+      <button type="submit" class="ui button">Send</button>
+    </form>
+
+    <h2>Latest uploaded sensor data</h2>
+    <pre id="latestUploadedSensorData" style="width: 100%;" rows="8"></pre>
+    uploaded image<br />
+    <img id="latestCameraSnapShot" width="100px" height="100px" />
+  </div>
+  </div>
+</body>
+
+</html>

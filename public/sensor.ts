@@ -60,6 +60,7 @@ class JsonDataManager {
 const jsonDataManager = new JsonDataManager();
 
 class SendJSONDataManager {
+  static SEND_INTERVAL_MS = 500;
   send(): void {
     const sendData = document.getElementById('jsonData')!.innerHTML;
 
@@ -82,4 +83,4 @@ setInterval(() => {
   if (checkBox.checked) {
     sendJSONDataManager.send();
   }
-}, 3000);
+}, SendJSONDataManager.SEND_INTERVAL_MS);

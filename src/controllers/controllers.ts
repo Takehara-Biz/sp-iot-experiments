@@ -24,13 +24,13 @@ export const routing = ((app: Express): void => {
       res.json(null);
     } else {
       const jsonDataStr = JSON.stringify(uploadSensorDataManager.latestSensorData);
-      LogUtil.info(JSON.stringify(jsonDataStr));
+      LogUtil.info(jsonDataStr);
       res.json(jsonDataStr);
     }
   });
 
-  app.get('/server-side', (_req, res) => {
-    res.sendFile(path.join(__dirname, '..', '/views/server-side.html'));
+  app.get('/server.html', (_req, res) => {
+    res.sendFile(path.join(__dirname, '..', '/views/server.html'));
   });
 
   app.post('/order', (req, res) => {

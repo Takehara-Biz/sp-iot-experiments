@@ -5,9 +5,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.5.0/dist/semantic.min.css">
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.js"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.5.0/dist/semantic.min.js"></script>
-  <title>スマホIoT実験室</title>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js"></script>
+
+  <title>SIL (Smartphone Iot Lab) Client Page</title>
   <script src="./sensors/accelerometer-manager.js"></script>
   <script src="./sensors/camera-manager.js"></script>
   <script src="./sensors/device-orientation-manager.js"></script>
@@ -19,31 +21,69 @@
   <script src="./get-order.js"></script>
   <script src="./for-semantic-ui.js"></script>
   <script src="./client.js"></script>
+  
+  <!-- <link ref="stylesheet" href="sil-common.css"> -->
+  <style>
+    h1 {
+      font-size: large;
+      padding-top: 24px;
+    }
+  </style>
 </head>
 
 <body>
-  <div class="ui container">
-    <h1>スマホIoT実験室</h1>
-    <div class="ui top attached tabular menu">
-      <a class="item active" data-tab="first">はじめに</a>
-      <a class="item" data-tab="second">センサー値の取得と表示</a>
-      <a class="item" data-tab="third">センサー値の送信設定</a>
-      <a class="item" data-tab="fourth">アクチュエーター編</a>
+  <div class="ui fixed inverted menu">
+    <div class="ui container">
+      <a href="#" class="header item">
+        <img class="logo" src="/images/semantic-ui-logo.png">
+        <span style="margin-left: 10px;">SIL (Smartphone Iot Lab) Client Page</span>
+      </a>
     </div>
-    <div class="ui bottom attached tab segment active" data-tab="first">
-      <p>本サイトは、javascript（「Sensor API」や「MediaDevices」など）を利用して、スマホのセンサーやアクチュエーターを操作するための実験用のWebページである。</p>
-      <p>本ページは、PCではなく、スマートフォンのブラウザからアクセスすること。</p>
-      <p>実際にセンサーやアクチュエーターを操作できるかどうかは、端末、OS、ブラウザに依存する。</p>
-      <p>以下の特徴を持つ。</p>
-      <ol>
-        <li>スマホのセンサー値を画面上に表示できる</li>
-        <li>取得したセンサー値を、HTTP(S)のPOSTで、サーバに定期的に送信できる</li>
-        <li>サーバからWebでSocket受け取った命令文字列を元に、スマホのアクチュエーターを操作できる</li>
-      </ol>
+  </div>
+
+  <div class="ui styled accordion" style="margin-top: 64px;">
+    <div class="active title">
+      <i class="dropdown icon"></i>
+      (1/4) Preface
     </div>
-    <div class="ui bottom attached tab segment" data-tab="second">
+    <div class="active content">
+      <p>This web page conducts an experiment to manipulate sensors and actuators in a smart phone using javascript API (<a href="https://developer.mozilla.org/en-US/docs/Web/API/Sensor_APIs" target="_blank" rel="noopener">Sensor APIs</a> and <a href="https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices" target="_blank" rel="noopener">MediaDevices</a>) </p>
+      <p>Access this page from <strong>a web browser of your smartphone</strong>, not PC</p>
+      <p>It depends on a hardware, OS, and web browser to be able to control sensors and actuators.</p>
+      <p>The below diagram explaings main usecase.</p>
+      <pre class="mermaid">
+        sequenceDiagram
+        title: Main usecase of SIL (SP IoT Lab)
+        participant sp as SmartPhone
+        participant s as Node.js app on your local PC
+        participant wb as Web browser on your local PC
+    
+        note over sp,wb: Monitoring Use Case
+        sp ->> s : get client.html
+        sp ->> sp : allow and print sensor data
+        sp ->> sp : start sending sensor data to the server.
+        loop regularly
+            sp ->> s : sends sensor data
+        end
+        wb ->> s : get server.html
+        loop regularly
+            wb ->> s : receives and print sensor data
+        end
+    
+        note over sp,wb: Actuating Use Case
+        wb ->> s : sends an order to use actuator.
+        s ->> sp : sends an order.
+        sp ->> sp : use actuators (e.g. print, sound, vibration, etc.)
+      </pre>
+    </div>
+
+    <div class="title">
+      <i class="dropdown icon"></i>
+      (2/4) Access and print sensor data
+    </div>
+    <div class="content">
       <div>
-        <h2>カメラ</h2>
+        <h1>Camera</h1>
         <div class="ui toggle checkbox">
           <input type="checkbox" onchange="onChangeCameraManagerCheckBox(event);">
           <label></label>
@@ -51,46 +91,46 @@
         <a href="https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia" target="_blank"
           rel="noopener">MediaDevices: getUserMedia()</a>
         <div>
-          <button id="changeCameraId" class="ui button" disabled onclick="cameraManager.videoChangeCamera();">切替</button>
+          <button id="changeCameraId" class="ui button" disabled onclick="cameraManager.videoChangeCamera();">Switch camera</button>
         </div>
         <div>
           <p id="js-camera"></p>
-          <div style="border:1px solid black; padding: 20px;">
+          <div style="border:1px solid black; padding: 8px;">
             <video width="100px" height="100px" id="video" autoplay="autoplay"></video>
           </div>
           <div>
-            <p>スナップショット画像</p>
+            <p>Snapshot image</p>
             <canvas id="snapShotCanvas" width="100px" height="100px"></canvas>
             <br/>
-            base64化<br/>
+            converts to base64<br/>
             <textarea type="text" id="snapShotBase64" rows="4" style="width: 100%;"></textarea>
           </div>
         </div>
       </div>
       <div>
-        <h2>重力加速度センサー</h2>
+        <h1>Gravity Sensor（重力加速度センサー）</h1>
         <div class="ui toggle checkbox">
           <input type="checkbox" onchange="onChangeGravitySensorManagerCheckBox(event);">
           <label></label>
         </div>
         <a href="https://developer.mozilla.org/en-US/docs/Web/API/GravitySensor" target="_blank"
           rel="noopener">GravitySensor</a>
-        <p>0から変わらない場合は、お使いの端末またはブラウザが、重力加速度センサーの取得に対応しておりません。</p>
-        <p>X（左右）<span id="gravityXSpan">0</span></p>
-        <p>Y（上下）<span id="gravityYSpan">0</span></p>
-        <p>Z（前後）<span id="gravityZSpan">0</span></p>
+        <p>If the value keeps 0, your device does not support this sensor.</p>
+        <p>X (left-right)<span id="gravityXSpan">0</span></p>
+        <p>Y (up-down)<span id="gravityYSpan">0</span></p>
+        <p>Z (front-rear)<span id="gravityZSpan">0</span></p>
       </div>
       <div>
-        <h2>加速度センサー</h2>
+        <h1>Accelerometer（加速度センサー）</h1>
         <a href="https://developer.mozilla.org/en-US/docs/Web/API/Accelerometer" target="_blank"
           rel="noopener">Accelerometer</a>
-        <p>0から変わらない場合は、お使いの端末またはブラウザが、加速度センサーの取得に対応しておりません。</p>
-        <p>X（左右）<span id="accelerationXSpan">0</span></p>
-        <p>Y（上下）<span id="accelerationYSpan">0</span></p>
-        <p>Z（前後）<span id="accelerationZSpan">0</span></p>
+          <p>If the value keeps 0, your device does not support this sensor.</p>
+        <p>X (left-right)<span id="accelerationXSpan">0</span></p>
+        <p>Y (up-down)<span id="accelerationYSpan">0</span></p>
+        <p>Z (front-rear)<span id="accelerationZSpan">0</span></p>
       </div>
       <div>
-        <h2>コンパス（方位）</h2>
+        <h2>Orientation（方位コンパス）</h2>
         <div class="ui toggle checkbox">
           <input type="checkbox" onchange="onChangeDeviceOrientationManagerCheckBox(event);">
           <label></label>
@@ -98,7 +138,7 @@
         <a href="https://developer.mozilla.org/en-US/docs/Web/API/DeviceOrientationEvent" target="_blank"
           rel="noopener">DeviceOrientationEvent</a>
         <p>（どうも精度が低い気がする・・。）</p>
-        <p>0から変わらない場合は、お使いの端末またはブラウザが、コンパス（方位）の取得に対応しておりません。</p>
+        <p>If the value keeps 0, your device does not support this sensor.</p>
         <p>Result&nbsp;<span id="deviceOrientResult"></span></p>
         <p>AdjustedValue&nbsp;<span id="deviceOrientationAdjustedValue">0</span></p>
         <p>Absolute&nbsp;<span id="deviceOrientationAbsolute">0</span></p>
@@ -107,59 +147,68 @@
         <p>Gamma&nbsp;<span id="deviceOrientationGamma">0</span></p>
       </div>
       <div>
-        <h2>位置情報</h2>
+        <h2>Geolocation</h2>
         <div class="ui toggle checkbox">
           <input type="checkbox" onchange="onChangeGeolocationManagerCheckBox(event);">
           <label></label>
         </div>
         <a href="https://developer.mozilla.org/en-US/docs/Web/API/Geolocation_API/Using_the_Geolocation_API" target="_blank"
           rel="noopener">Accelerometer</a>
-        <p>0から変わらない場合は、お使いの端末またはブラウザが、位置情報の取得に対応しておりません。</p>
+          <p>If the value keeps 0, your device does not support this sensor.</p>
         <p>lat（緯度）<span id="positionLatSpan">0.0</span></p>
         <p>lng（経度）<span id="positionLngSpan">0.0</span></p>
       </div>
     </div>
-    <div class="ui bottom attached tab segment" data-tab="third">
-      <h2>送信JSONデータ</h2>
+
+    <div class="title">
+      <i class="dropdown icon"></i>
+      (3/4) Setting to send sensor data
+    </div>
+    <div class="content">
+      <h1>Sending JSON data</h1>
       <div>
         <div class="ui toggle checkbox">
           <input type="checkbox" id="sendFlag" />
-          <label for="sendFlag">定期的にJSONデータを送信する</label>
+          <label for="sendFlag">sends regularly</label>
         </div>
       </div>
-      <div width="100%">
-        <textarea id="jsonData" style="box-sizing:border-box; width:100%;" rows="20"></textarea>
-      </div>
+      <textarea id="jsonData" style="box-sizing:border-box; width: 100%; margin-top: 12px;" rows="8"></textarea>
     </div>
-    <div class="ui bottom attached tab segment" data-tab="fourth">
-      <p>ネタ。ディスプレイ、スピーカー、振動</p>
-      <h2>ディスプレイ（ただのDOM操作）</h2>
+
+    <div class="title">
+      <i class="dropdown icon"></i>
+      (4/4) Actuator
+    </div>
+    <div class="content">
+      <h1>Display</h1>
+      <p>(Just DOM control)</p>
       <div>
-        <p id="output">ここが置き換わります。</p>
+        <p id="output">Replaced String</p>
         <button class="ui button" onclick="displayManager.replace();">
-          文字列を書き換える
+          Replaces with the current date time
         </button>
       </div>
       <div>
-        <h2>スピーカー</h2>
+        <h1>Speaker</h1>
         <div>
           <audio controls="controls" autobuffer="autobuffer" autoplay="autoplay" id="audioSource">
           </audio>
         </div>
       </div>
       <div>
-        <h2>振動</h2>
+        <h1>Vibration</h1>
         <a href="https://developer.mozilla.org/en-US/docs/Web/API/Navigator/vibrate" target="_blank"
           rel="noopener">Navigator: vibrate()</a>
         <br />
-        <button id="vibrate" class="ui button" onclick="vibrationManager.vibrate();">振動させる</button>
+        <button id="vibrate" class="ui button" onclick="vibrationManager.vibrate();">Vibrate!</button>
       </div>
       <div>
-        <h2>受信JSONデータ</h2>
-        <div id="get-order"></div>
+        <h1>Latest received order</h1>
+        <div id="get-order">(Not yet received)</div>
       </div>
     </div>
   </div>
+  <footer style="text-align: center; margin-top: 20px;">(C) LIBERTY (Takehara Yasushi)</footer>
 </body>
 
 </html>

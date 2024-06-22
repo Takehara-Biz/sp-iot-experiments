@@ -1,4 +1,5 @@
 class CameraManager implements ManagerInterface {
+  private static TAKE_SNAPSHOT_INTERVAL_MS = 500;
 
   isRecording: boolean = false;
   private mediaStream: MediaStream | null = null;
@@ -31,7 +32,7 @@ class CameraManager implements ManagerInterface {
           const snapShotBase64TextArea = document.getElementById('snapShotBase64')! as HTMLInputElement;
           snapShotBase64TextArea.innerText = canvas.toDataURL();
           this.snapShotBase64 = canvas.toDataURL();
-        }, 1000);
+        }, CameraManager.TAKE_SNAPSHOT_INTERVAL_MS);
         this.isRecording = true;
       }).catch((e) => {
         this.isRecording = false;
