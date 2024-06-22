@@ -20,6 +20,7 @@ class AudioManager {
 }
 const audioManager = new AudioManager();
 
-window.onload = (() => {
-  audioManager.ready();
-})
+// window.onload = (() => {
+//   alert('aaa');
+//   audioManager.ready();
+// })

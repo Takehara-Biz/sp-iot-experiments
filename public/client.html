@@ -15,12 +15,19 @@
   <script src="./sensors/device-orientation-manager.js"></script>
   <script src="./sensors/geolocation-manager.js"></script>
   <script src="./sensors/gravity-sensor-manager.js"></script>
-  <script src="./sensor.js"></script>
   <script src="./audio-base64.js"></script>
+  <script src="./sensor.js"></script>
   <script src="./actuator.js"></script>
   <script src="./get-order.js"></script>
   <script src="./for-semantic-ui.js"></script>
   <script src="./client.js"></script>
+  <script>
+    // onload系の処理はここに集約すること。
+    window.onload = (() => {
+      onloadForSemanticUI();
+      audioManager.ready();
+    })
+  </script>
   
   <!-- <link ref="stylesheet" href="sil-common.css"> -->
   <style>
