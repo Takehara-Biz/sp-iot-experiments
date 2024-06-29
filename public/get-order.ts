@@ -1,3 +1,6 @@
+/**
+ * It's better to use WebSocket instead of polling.
+ */
 class GetOrderManager {
   constructor() {
     setInterval(() => {
