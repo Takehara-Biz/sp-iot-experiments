@@ -9,13 +9,14 @@ import { OrderDto } from "../models/orderDto";
 export const routing = ((app: Express): void => {
 
   app.get('/', (_req, res) => {
-    res.send('Hello World!');
+    res.sendFile(path.join(__dirname, '..', '/views/index.html'));
   });
 
   app.post('/sensor-data', (req, res) => {
     const jsonData = req.body;
     LogUtil.info(LogUtil.simplifyJsonForLogging(jsonData));
-    const dto = new SensorDataDto(jsonData.gravitySensor.x, jsonData.gravitySensor.y, jsonData.gravitySensor.z, jsonData.cameraSnapShotBase64, jsonData.uploadDateTime, new Date());
+    // const dto = new SensorDataDto(jsonData.gravitySensor.x, jsonData.gravitySensor.y, jsonData.gravitySensor.z, jsonData.cameraSnapShotBase64, jsonData.uploadDateTime, new Date());
+    const dto = SensorDataDto.convert(jsonData);
     uploadSensorDataManager.replace(dto);
     res.send('OK');
   });

@@ -1,3 +1,11 @@
+function onChangeAccelerometerManagerCheckBox(event: any){
+  if(event.target.checked){
+    accelerometerManager.start();
+  } else {
+    accelerometerManager.stop();
+  }
+}
+
 function onChangeCameraManagerCheckBox(event: any){
   if(event.target.checked){
     cameraManager.start();

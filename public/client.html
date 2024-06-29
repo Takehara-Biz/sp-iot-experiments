@@ -43,11 +43,11 @@
   </div>
 
   <div class="ui styled accordion" style="margin-top: 64px;">
-    <div class="active title">
+    <div class="title">
       <i class="dropdown icon"></i>
       (1/4) Preface
     </div>
-    <div class="active content">
+    <div class="content">
       <p>This web page conducts an experiment to manipulate sensors and actuators in a smart phone using javascript API (<a href="https://developer.mozilla.org/en-US/docs/Web/API/Sensor_APIs" target="_blank" rel="noopener">Sensor APIs</a> and <a href="https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices" target="_blank" rel="noopener">MediaDevices</a>) </p>
       <p>Access this page from <strong>a web browser of your smartphone</strong>, not PC</p>
       <p>It depends on a hardware, OS, and web browser to be able to control sensors and actuators.</p>
@@ -78,11 +78,11 @@
       </pre>
     </div>
 
-    <div class="title">
+    <div class="active title">
       <i class="dropdown icon"></i>
       (2/4) Access and print sensor data
     </div>
-    <div class="content">
+    <div class="active content">
       <div>
         <h1>Camera</h1>
         <div class="ui toggle checkbox">
@@ -123,6 +123,10 @@
       </div>
       <div>
         <h1>Accelerometer（加速度センサー）</h1>
+        <div class="ui toggle checkbox">
+          <input type="checkbox" onchange="onChangeAccelerometerManagerCheckBox(event);">
+          <label></label>
+        </div>
         <a href="https://developer.mozilla.org/en-US/docs/Web/API/Accelerometer" target="_blank"
           rel="noopener">Accelerometer</a>
           <p>If the value keeps 0, your device does not support this sensor.</p>
@@ -131,7 +135,7 @@
         <p>Z (front-rear)<span id="accelerationZSpan">0</span></p>
       </div>
       <div>
-        <h2>Orientation（方位コンパス）</h2>
+        <h2>DeviceOrientation（方位コンパス）</h2>
         <div class="ui toggle checkbox">
           <input type="checkbox" onchange="onChangeDeviceOrientationManagerCheckBox(event);">
           <label></label>

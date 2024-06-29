@@ -14,6 +14,7 @@ app.use(express.static('public'));
 
 import {routing} from './controllers/controllers'
 routing(app);
+addMiddleware(app);
 
 import fs from 'fs'
 import https from 'https'

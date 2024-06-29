@@ -26,9 +26,20 @@ class JsonDataManager {
     this.jsonData = {
       uploadDateTime: new Date().toISOString()
     };
+    if (accelerometerManager.isRecording) {
+      this.jsonData = Object.assign(this.jsonData, {
+        accelerometer: {
+          x: accelerometerManager.x,
+          y: accelerometerManager.y,
+          z: accelerometerManager.z
+        },
+      });
+    }
     if (deviceOrientationManager.isRecording) {
       this.jsonData = Object.assign(this.jsonData, {
         deviceOrientation: {
+          adjustedValue: deviceOrientationManager.adjustedValue,
+          absolute: deviceOrientationManager.absolute,
           alpha: deviceOrientationManager.alpha,
           beta: deviceOrientationManager.beta,
           gamma: deviceOrientationManager.gamma

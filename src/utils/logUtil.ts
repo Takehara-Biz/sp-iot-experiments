@@ -6,6 +6,9 @@ export class LogUtil {
     }
     return JSON.stringify(clone);
   }
+  static debug(message: string): void {
+    console.debug("[DEBUG] " + message);
+  }
   static info(message: string): void {
     //const date = new Date().toLocaleString();
     console.info("[ INFO] " + message);
