@@ -37,7 +37,8 @@ export const routing = ((app: Express): void => {
   app.post('/order', (req, res) => {
     let jsonData = req.body;
     LogUtil.info('new order! : ' + JSON.stringify(jsonData));
-    const orderDto = new OrderDto(jsonData.printString, jsonData.vibrateFlag, new Date());
+    const soundFileString = jsonData.sound ?? null;
+    const orderDto = new OrderDto(jsonData.printString, soundFileString, jsonData.vibrateFlag, new Date());
     orderManager.enqueue(orderDto);
     res.redirect('/server.html');
   });

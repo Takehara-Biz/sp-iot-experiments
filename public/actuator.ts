@@ -15,7 +15,7 @@ const vibrationManager = new VibrationManager();
 class AudioManager {
   ready(){
     const source = document.getElementById('audioSource')! as HTMLSourceElement;
-    source.src = sampleAudioSrc;
+    source.src = "";
   }
 }
 const audioManager = new AudioManager();

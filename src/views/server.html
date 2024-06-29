@@ -39,6 +39,28 @@
           <label>String to print</label>
           <input type="text" id="printString" name="printString" class="ui input" />
         </div>
+        <div class="inline fields">
+          <label for="sound">Select sound:</label>
+          <div class="field">
+            <div class="ui radio checkbox">
+              <input type="radio" name="sound" value="no-sound" checked="" tabindex="0" class="hidden">
+              <label>No Sound</label>
+            </div>
+          </div>
+          <div class="field">
+            <div class="ui radio checkbox">
+              <input type="radio" name="sound" value="sound1" tabindex="0" class="hidden">
+              <label>Sound1</label>
+            </div>
+          </div>
+          <div class="field">
+            <div class="ui radio checkbox">
+              <input type="radio" name="sound" value="sound2" tabindex="0" class="hidden">
+              <label>Sound2</label>
+            </div>
+          </div>
+        </div>
+        <p>The sound from OtoLogic(<a href="https://otologic.jp/" target="_blank" rel="noopener">otologic.jp</a>), thanks!</p>
         <div class="field">
           <label>Vibrate</label>
           <input type="checkbox" id="vibrateFlag" name="vibrateFlag" class="ui checkbox" />
@@ -47,6 +69,11 @@
       </form>
     </div>
   </div>
+  <script>
+    $('.ui.radio.checkbox')
+      .checkbox()
+    ;
+  </script>
 </body>
 
 </html>

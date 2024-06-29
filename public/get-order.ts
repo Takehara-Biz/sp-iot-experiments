@@ -14,6 +14,12 @@ class GetOrderManager {
           const jsonData = JSON.parse(jsonStr);
           document.getElementById('get-order')!.innerHTML = JSON.stringify(JSON.parse(jsonStr), null, 2);
           document.getElementById('output')!.innerHTML = jsonData["printString"];
+          const audioTag = document.getElementById("audioTagId")! as HTMLAudioElement;
+          if(jsonData["soundFileString"] === "no-sound"){
+            audioTag.src = "";
+          } else {
+            audioTag.src = "/sounds/" + jsonData["soundFileString"] + ".mp3";
+          }
           if(jsonData["vibrateFlag"] === "on"){
             vibrationManager.vibrate();
           }

@@ -1,3 +1,8 @@
 export class OrderDto {
-  constructor(private printString: string, private vibrateFlag: boolean, private orderDateTime: Date){}
+  constructor(
+    private printString: string,
+    private soundFileString: string | null,
+    private vibrateFlag: boolean,
+    private orderDateTime: Date,
+  ){}
 }

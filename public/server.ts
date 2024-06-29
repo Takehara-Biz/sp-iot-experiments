@@ -17,4 +17,4 @@ window.onload = (() => {
       console.error('error! ' + error);
     });
   }, 500);
-})
+});
